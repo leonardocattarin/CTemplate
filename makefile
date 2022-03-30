@@ -28,6 +28,8 @@ $(PROGNAME): $(OBJ)
 clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
 	rm -f $(PROGNAME)
+	rm -f plot.png
 	
 run: $(PROGNAME)
 	./$(PROGNAME)
+	gnuplot plot.p
