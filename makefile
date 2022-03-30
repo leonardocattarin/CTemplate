@@ -1,26 +1,33 @@
-IDIR =../include
-CC=gcc
-CFLAGS=-I$(IDIR) -Wall
-
-ODIR=obj
-LDIR =../lib
+PROGNAME = Main
+_DEPS = functions
 
 LIBS=-lm
 
-_DEPS =
-DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+IDIR =./include
+ODIR=.
+LDIR =../lib
 
-_OBJ = Main.o
+CC=gcc
+CFLAGS=-I$(IDIR) -Wall
+
+DEPS_H = $(patsubst %,$(IDIR)/%.h,$(_DEPS).h)
+DEPS_O = $(patsubst %,%.o,$(_DEPS))
+
+_OBJ = $(PROGNAME).o $(DEPS_O)
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
-$(ODIR)/%.o: %.c $(DEPS)
+$(ODIR)/%.o: %.c $(DEPS_H)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-Main: $(OBJ)
+$(PROGNAME): $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean
 
 clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
+	rm -f $(PROGNAME)
+	
+run: $(PROGNAME)
+	./$(PROGNAME)
