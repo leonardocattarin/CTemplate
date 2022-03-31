@@ -1,5 +1,6 @@
-PROGNAME = Main
+PROGNAME = main
 _DEPS = functions
+CLEANUP = plot.png data.csv
 
 LIBS=-lm
 
@@ -23,12 +24,13 @@ $(ODIR)/%.o: %.c $(DEPS_H)
 $(PROGNAME): $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
-.PHONY: clean
+.PHONY: clean, clean-output
 
 clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
-	rm -f $(PROGNAME)
-	rm -f plot.png
+	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ $(PROGNAME)
+
+clean-output:
+	rm -f $(CLEANUP)
 	
 run: $(PROGNAME)
 	./$(PROGNAME)
