@@ -1,2 +1,2 @@
 # CTemplate
-C Software Template
+C Template
